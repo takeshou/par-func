@@ -1,0 +1,118 @@
+---
+title: "Par()関数"
+author: "Shouhei TAKEUCHI"
+date: "\\today"
+header-includes:
+   - \usepackage{zxjatype}
+   - \setmainfont{メイリオ}
+   - \setjamainfont{メイリオ}
+   - \setmonofont{Yutapon coding Regular}
+output:
+  pdf_document:
+    latex_engine: xelatex
+    toc: true
+fontsize: 12pt
+lang: "Ja"
+---
+\newpage
+
+# par()関数の使い方
+
+作図の際に、さまざまなパラメータを指定するpar()関数を使いこなすために、情報をストックしていくファイル。
+
+## このファイルの更新情報
+
+このファイルは`r Sys.time()`に更新されました。
+
+* githubで公開してみた。
+
+## データフレームの作成
+
+最初にデータセットを準備しておく。
+データフレームは簡単なものを用意しておく。
+
+```{r}
+set.seed(1)
+dat <- data.frame(height = rnorm(30, 150, 10),
+                  weight = rnorm(30, 40, 5),
+                  sex = sample(c("M", "F"), 30, replace = TRUE),
+                  village = sample(c("A", "B", "C"), 30, replace = TRUE),
+                  disease = rbinom(30, 1, 0.3))
+```
+
+
+# グラフの見かけを調節する
+
+表示するグラフの色や線の種類など、グラフの見かけを調整するパラメータを指定する。
+
+## 色
+
+色の指定のため、col、fg、bg、border引数についてまとめる。
+
+### col
+
+plot regionに描かれるデータシンボル、線、テキストの色の指定に利用する。軸、ラベル、タイトル、サブタイトルはcol.axis、col.lab、col.main、col.subを利用する。
+
+#### 散布図
+
+par()関数内のcolオプションは、plot()関数で作った散布図の、データシンボルや線と枠の線の色を変更している。plot()関数内のcolオプションでは、データシンボルの色だけが変わっている。低水準関数でのプロット（lines()関数やpoints()関数）では、plot()関数の時と同じ影響範囲となっている。
+
+マージン（プロット領域の外側、作図領域の内側）では、mtext()関数の出力には影響している。title()関数には影響しない。
+
+```{r scat}
+op1 <- par(mfrow = c(1, 2))
+
+op2 <- par(col = "red")
+plot(dat$height, dat$weight,
+     main = "par()でcol", sub = "sub",
+     xlab = "xlab", ylab = "ylab")
+mtext("text")
+par(op2)
+
+plot(dat$height, dat$weight, col = "blue",
+     main = "plot()とmtext()でcol", sub = "sub", 
+     xlab = "xlab", ylab = "ylab")
+mtext("text", col = "blue")
+
+op2 <- par(col = "red")
+plot(dat$height, dat$weight,
+     main = "", sub = "",
+     xlab = "", ylab = "")
+title(main = "par()でcol", sub = "sub",
+      xlab = "xlab", ylab = "ylab")
+par(op2)
+
+plot(dat$height, dat$weight,
+     main = "", sub = "", 
+     xlab = "", ylab = "")
+title(main = "title()でcol", sub = "sub",
+      xlab = "xlab", ylab = "ylab",
+      col = "blue")
+
+op2 <- par(col = "red")
+plot(dat$height, dat$weight, type = "n",
+     main = "par()でcol", sub = "sub",
+     xlab = "xlab", ylab = "ylab")
+lines(dat$height, dat$weight)
+par(op2)
+
+plot(dat$height, dat$weight, type = "n",
+     main = "lines()でcol", sub = "sub",
+     xlab = "xlab", ylab = "ylab")
+lines(dat$height, dat$weight, col = "blue")
+
+op2 <- par(col = "red")
+plot(dat$height, dat$weight, type = "n",
+     main = "par()でcol", sub = "sub",
+     xlab = "xlab", ylab = "ylab")
+points(dat$height, dat$weight)
+par(op2)
+
+plot(dat$height, dat$weight, type = "n",
+     main = "points()でcol", sub = "sub",
+     xlab = "xlab", ylab = "ylab")
+points(dat$height, dat$weight, col = "blue")
+
+par(op1)
+```
+
