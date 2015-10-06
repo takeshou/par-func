@@ -154,3 +154,67 @@ hist(dat$weight, col = "blue",
 par(op1)
 ```
 
+#### 棒グラフ
+
+par()関数のcolオプションは、棒グラフでは何も影響しない。barplot()関数内のcolオプションでは、バーの中が塗られるらしい。
+
+```{r bar1}
+op1 <- par(mfrow = c(1, 2))
+op2 <- par(col = "red")
+barplot(table(dat$village),
+        main = "par()でcol", sub = "sub",
+        xlab = "xlab", ylab = "ylab")
+par(op2)
+barplot(table(dat$village), col = "blue",
+        main = "barplot()でcol", sub = "sub",
+        xlab = "xlab", ylab = "ylab")
+par(op1)
+```
+
+積み上げ棒グラフも普通の棒グラフと同じような結果になった。
+
+```{r bar2}
+op1 <- par(mfrow = c(1, 2))
+op2 <- par(col = "red")
+plot(dat$sex, dat$village,
+     main = "main", sub = "sub",
+     xlab = "xlab", ylab = "ylab")
+par(op2)
+plot(dat$sex, dat$village, col = "blue",
+     main = "main", sub = "sub",
+     xlab = "xlab", ylab = "ylab")
+par(op1)
+```
+
+#### モザイクプロット
+
+par()関数のcolオプションは、モザイクプロットでも何も影響しない。mosaicplot()関数内のcolオプションでは、全てのモザイクが塗られた。
+
+```{r mos}
+op1 <- par(mfrow = c(1, 2))
+op2 <- par(col = "red")
+mosaicplot(dat$sex ~ dat$village,
+           main = "main", sub = "sub",
+           xlab = "xlab", ylab = "ylab")
+par(op2)
+mosaicplot(dat$sex ~ dat$village, col = "blue",
+           main = "main", sub = "sub",
+           xlab = "xlab", ylab = "ylab")
+par(op1)
+```
+
+#### 長方形
+
+par()関数のcolオプションは枠の色にだけ影響し、rect()関数のcolオプションは、四角形の塗りつぶしに関係している。
+
+```{r rect}
+op1 <- par(mfrow = c(1, 2))
+op2 <- par(col = "red")
+plot(0:10, type = "n")
+rect(1, 1, 9, 9)
+par(op2)
+
+plot(0:10, type = "n")
+rect(1, 1, 9, 9, col = "blue")
+par(op1)
+```
