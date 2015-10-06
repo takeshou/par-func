@@ -116,3 +116,41 @@ points(dat$height, dat$weight, col = "blue")
 par(op1)
 ```
 
+#### 箱ヒゲ図
+
+par()関数のcolオプションは、箱ヒゲ図では枠の線にだけ反映されている。boxplo()関数内のcolオプションでは、箱の中が塗られるらしい。
+boxplot()関数に関しては、他のリポジトリ（↓）でまとめたので、そちらも参照するといいかも。
+https://github.com/takeshou/boxplot-summary
+
+```{r box}
+op1 <- par(mfrow = c(1, 2))
+op2 <- par(col = "red")
+boxplot(dat$height,
+        main = "par()でcol", sub = "sub",
+        xlab = "xlab", ylab = "ylab")
+par(op2)
+
+boxplot(dat$height, col = "blue",
+        main = "boxplot()でcol", sub = "sub",
+        xlab = "xlab", ylab = "ylab")
+par(op1)
+```
+
+#### ヒストグラム
+
+par()関数のcolオプションは、ヒストグラムでは何も影響しない。hist()関数内のcolオプションでは、バーの中が塗られるらしい。
+
+```{r hist}
+op1 <- par(mfrow = c(1, 2))
+op2 <- par(col = "red")
+hist(dat$weight,
+     main = "par()でcol", sub = "sub",
+     xlab = "xlab", ylab = "ylab")
+par(op2)
+
+hist(dat$weight, col = "blue",
+     main = "hist()でcol", sub = "sub",
+     xlab = "xlab", ylab = "ylab")
+par(op1)
+```
+
