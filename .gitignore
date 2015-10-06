@@ -1,1 +1,6 @@
-'par.pdf' 
+.Rproj.user
+.Rhistory
+.RData
+*.tex
+*.html
+*.pdf
