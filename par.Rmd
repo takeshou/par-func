@@ -218,3 +218,102 @@ plot(0:10, type = "n")
 rect(1, 1, 9, 9, col = "blue")
 par(op1)
 ```
+
+
+### fg
+### bg
+### border
+rect()関数でborderを指定すると四角形の枠の色
+
+
+### ltyオプションで実感
+ltyオプションを高水準関数内で指定したときと、par()関数で指定したときの違いをチェックする。
+
+```{r}
+# op1 <- par(mfrow = c(2, 2))
+# op2 <- par(lty = "dashed")
+# plot(x1, x2, type = "l")# 線は破線
+# plot(x1, x2, type = "l", lty = "solid")# 線は実線
+# plot(x1, x2, type = "l")# 線は破線
+# par(op2)
+# par(op1)
+```
+
+# 余白
+インチで指定する方法と、行数で指定する方法がある。行数で指定する方が、理解しやすいので、こちらを記述しておく。
+図の構成を知っておくと良い。
+プロットをするプロット領域（plot）、それにマージンを加えた作図領域（figure）、さらにその外側のデバイス領域（outer）がある。今回は、プロット領域の外側を余白とよんで、作図領域内の余白を制御するのにmarオプション、デバイス領域内で作図領域との間の余白を制御するのにomaオプションを使う。
+
+参考：http://stat.biopapyrus.net/graph/plotarea.html
+参考：http://rgraphics.limnology.wisc.edu/rmargins_sf.php
+
+### mar、oma
+```{r parmaroma}
+# 作図系の領域の理解と制御
+# データの作成
+dat <- data.frame(x = 0:10, y = 0:10)
+
+# データのプロット
+## 「outer」領域の確保
+par(oma = c(3, 3, 3, 3)) # すべてのサイドに3行
+
+## 「figure」領域の確保
+par(mar = c(5, 4, 4, 2) + 0.1) # 下5.1行、左、上4.1行、右2.1行
+# par(mar = c(5.1, 4.1, 4.1, 2.1))と同じ
+
+# プロット
+plot(dat$x, dat$y, type = "n", xlab = "X", ylab = "Y")
+
+# テキスト表示
+## プロット領域（plot）
+text(5, 5, "プロット領域", col = "red", cex = 2)
+text(5, 4, "text(5, 5, \"プロット領域\", col = \"red\", cex = 2)",
+     col = "red", cex = 1)
+box("plot", col = "red") # プロット領域（plot）を囲む
+
+## 作図領域（figure）
+mtext("作図領域", side = 3, line = 2, cex = 2, col = "green")
+mtext("par(mar = c(5, 4, 4, 2) + 0.1)", side = 3, line = 1,
+      cex = 1, col = "green")
+### 上（行は0から数える）
+mtext("Line 0", side = 3, line = 0, adj = 1.0, cex = 1, col = "green")
+mtext("Line 1", side = 3, line = 1, adj = 1.0, cex = 1, col = "green")
+mtext("Line 2", side = 3, line = 2, adj = 1.0, cex = 1, col = "green")
+mtext("Line 3", side = 3, line = 3, adj = 1.0, cex = 1, col = "green")
+### 左
+mtext("Line 0", side = 2, line = 0, adj = 1.0, cex = 1, col = "green")
+mtext("Line 1", side = 2, line = 1, adj = 1.0, cex = 1, col = "green")
+mtext("Line 2", side = 2, line = 2, adj = 1.0, cex = 1, col = "green")
+mtext("Line 3", side = 2, line = 3, adj = 1.0, cex = 1, col = "green")
+box("figure", col="green") # 作図領域（figure）を囲む
+
+## デバイス領域（outer）
+mtext("デバイス領域", side = 1, line = 1,
+      cex = 2, col = "blue", outer = TRUE)
+mtext("par(oma = c(3, 3, 3, 3))", side = 1, line = 2,
+      cex = 1, col = "blue", outer = TRUE)
+mtext("Line 0", side=1, line = 0, adj = 0.0,
+      cex = 1, col = "blue", outer = TRUE)
+mtext("Line 1", side=1, line = 1, adj = 0.0,
+      cex = 1, col = "blue", outer = TRUE)
+mtext("Line 2", side=1, line = 2, adj = 0.0,
+      cex = 1, col = "blue", outer = TRUE)
+box("outer", col="blue") # デバイス領域（figure）を囲む
+```
+
+
+
+# 複数のグラフを配置する
+
+# 追加注記つきのグラフ
+
+
+
+
+
+
+# 高水準関数内でも指定可能
+
+# par()でのみ指定可能
+
+# 読み込みだけ
